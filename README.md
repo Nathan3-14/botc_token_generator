@@ -1,4 +1,5 @@
 # Blood on the Clocktower - Token Maker
+# ADD CHANGED MARKERS TO WHAT I CHANGED, ALSO REMOVE THIS
 
 This project allows to create tokens to print and play Blood on the Clocktower. The tokens will be added to a pdf to simplify the printing. 
 
