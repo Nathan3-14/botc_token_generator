@@ -1,9 +1,10 @@
 import os
 import re
+import sys
 import requests
 
 # Constants for paths and URLs
-CHARACTERS_FILE_PATH = 'characters.txt'
+DEFAULT_CHARACTERS_FILE_PATH = 'characters.txt'
 SCRAPED_IMAGES_DIR = 'img/token/scraped_images/'
 BOTC_WIKI_BASE_URL = "https://wiki.bloodontheclocktower.com"
 
@@ -69,6 +70,18 @@ if __name__ == "__main__":
         'kazali': 'https://wiki.bloodontheclocktower.com/images/3/3c/Icon_kazali.png',
         'scarletwoman': 'https://wiki.bloodontheclocktower.com/images/1/13/Icon_scarletwoman.png',
     }
+
+    # Checks to see if user supplied an alternate file path to use for the characters list
+    args = sys.argv[1:]
+    if len(args) == 0:
+        print(f"INFO: No file path supplied, using default: '{DEFAULT_CHARACTERS_FILE_PATH}'...")
+        characters_file_path = DEFAULT_CHARACTERS_FILE_PATH
+    else:
+        if os.path.exists(args[0]):
+            characters_file_path = args[0]
+        else:
+            print("ERR: Invalid file path supplied...")
+            quit()
     
-    characters = read_characters_from_file(CHARACTERS_FILE_PATH)
+    characters = read_characters_from_file(characters_file_path)
     scrape_character_images(characters, ignore_list_with_urls)

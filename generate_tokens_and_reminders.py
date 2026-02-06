@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 import numpy as np
@@ -17,7 +18,7 @@ GENERATED_TOKENS_PATH = os.path.join(IMG_TOKEN_PATH, 'generated_tokens')
 GENERATED_REMINDERS_PATH = os.path.join(IMG_TOKEN_PATH, 'generated_reminders')
 CURVED_CHARACTER_NAMES_PATH = os.path.join(IMG_TOKEN_PATH, 'curved_character_names')
 CURVED_REMINDERS_PATH = os.path.join(IMG_TOKEN_PATH, 'curved_reminders')
-CHARACTERS_JSON_PATH =  'characters.json'
+DEFAULT_CHARACTERS_JSON_PATH =  'characters.json'
 TOKEN_BG_PATH = 'img/token_bg'
 
 # Ensure all necessary directories exist
@@ -196,11 +197,16 @@ def overlay_with_alpha_composite(base_image_path, overlay_image_paths, output_pa
 # Main processing logic
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
+    if len(args) == 0:
+        characters_json_path = DEFAULT_CHARACTERS_JSON_PATH
+
+
     try:
-        with open(CHARACTERS_JSON_PATH, 'r') as file:
+        with open(characters_json_path, 'r') as file:
             data = json.load(file)
     except FileNotFoundError:
-        print(f"Error: '{CHARACTERS_JSON_PATH}' not found.")
+        print(f"Error: '{characters_json_path}' not found.")
         exit()
 
     characters_in_json = [character['id'] for character in data]
