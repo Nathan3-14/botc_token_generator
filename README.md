@@ -1,5 +1,4 @@
 # Blood on the Clocktower - Token Maker
-# ADD CHANGED MARKERS TO WHAT I CHANGED, ALSO REMOVE THIS
 
 This project allows to create tokens to print and play Blood on the Clocktower. The tokens will be added to a pdf to simplify the printing. 
 
@@ -137,6 +136,10 @@ Follow these steps to contribute:
 - Commit your changes: git commit -m "Add some feature".
 - Push to the branch: git push origin feature-name.
 - Open a pull request.
+
+### Changes
+- Added additional argument to features 1, 2 and 3
+- Updated character list from [GrayPockets' Released as Homebrew](https://github.com/GrayPockets/Released-as-Homebrew/blob/main/Downloaded/characters.json)
 
 ## License
 - [Blood on the Clocktower](https://bloodontheclocktower.com) is a trademark of Steven Medway and The Pandemonium Institute
