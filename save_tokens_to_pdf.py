@@ -1,12 +1,14 @@
 import os
+import sys
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import inch
 from PIL import Image
 
 IMG_TOKEN_PATH = 'img/token'
-output_tokens_pdf_path = 'output_prints/tokens_printable.pdf'
-output_reminders_pdf_path = 'output_prints/reminders_printable.pdf'
+DEFAULT_OUTPUT_PATH = './output_tokens'
+# output_tokens_pdf_path = 'output_prints/tokens_printable.pdf'
+# output_reminders_pdf_path = 'output_prints/reminders_printable.pdf'
 
 generated_tokens_folder_path = os.path.join(IMG_TOKEN_PATH, 'generated_tokens')
 generated_reminders_folder_path = os.path.join(IMG_TOKEN_PATH, 'generated_reminders')
@@ -80,8 +82,19 @@ def images_to_pdf(folder_path, output_pdf_path, duplicates_tokens=False, image_n
         print(f"An error occurred while generating the PDF: {e}")
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
+    if len(args) == 0:
+        print(f'INFO: No output path supplied, using default: \'{DEFAULT_OUTPUT_PATH}\'...')
+        output_path = DEFAULT_OUTPUT_PATH
+    else:
+        output_path = args[0]
+    
+    if not os.path.exists(output_path):
+        os.mkdir(output_path)
+        
+     
     # Example usage for tokens and reminders with background color set to light gray
-    images_to_pdf(generated_tokens_folder_path, output_tokens_pdf_path, duplicates_tokens=True, image_new_size = 85, side_margin=0.5, between_margin=0.10, background_color=(86, 68, 46))
+    images_to_pdf(generated_tokens_folder_path, f"{output_path}/tokens_printable.pdf", duplicates_tokens=True, image_new_size = 85, side_margin=0.5, between_margin=0.10, background_color=(86, 68, 46))
     # 614 614 614 0.13 79
-    images_to_pdf(generated_reminders_folder_path, output_reminders_pdf_path, image_new_size=55, side_margin=0.5, between_margin=0.10, background_color=(45, 45, 45))
+    images_to_pdf(generated_reminders_folder_path, f"{output_path}/reminders_printable.pdf", image_new_size=55, side_margin=0.5, between_margin=0.10, background_color=(45, 45, 45))
     # 255 255 255 0.2 51

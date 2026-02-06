@@ -102,23 +102,25 @@ Execute the script with:
 ## Features
 To run a specific function, run the following (replacing PythonFileName with any of the feature functions): 
 ```bash
-python {PythonFileName}.py
+python {PythonFileName}.py [file_path]
 ```
 
-**All files will be save in the "output_prints" folder**
 
 If running for the first time, it is recommended to run them using the following order:
 
 - Feature 1: `get_assets_from_wiki.py`
     - This program scrapes the assets from the official wiki. 
     - Some links are hardcoded as they were not directly scappable 
-    - The scrapper may become obsolete if there are changes to the urls of the wiki. If so, feel free to contact me so I can implement a fix. 
+    - The scrapper may become obsolete if there are changes to the urls of the wiki. If so, feel free to contact me so I can implement a fix.
+    - The optional file path will change what character list is used. The default  is `characters.txt`.
 - Feature 2: `generate_tokens_and_reminders.py`
     - This will generate all tokens and all reminders for all characters
     - Background can be changed
     - Reminders listed in the characters.json
+    - The optional file path will change what file is used to generate the ability text and leaves. The default is `characters.json`.
 - Feature 3: `save_tokens_to_pdf.py`
     - This places all the tokens and reminders on a pdf to prepare from printing
+    - The optional folder path changes where the output go. The default is `./output_tokens`.
 - Feature 4: `generate_night_order_sheet.py`
     - Allow the creation of the night order sheets for first and other nights
     - Can be printed on A4, and folded in 2

@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 import numpy as np
 from PIL import Image, ImageDraw
+from get_assets_from_wiki import DEFAULT_CHARACTERS_FILE_PATH
 from wand.color import Color
 from wand.drawing import Drawing
 from wand.image import Image as wandImage
@@ -18,7 +19,7 @@ GENERATED_TOKENS_PATH = os.path.join(IMG_TOKEN_PATH, 'generated_tokens')
 GENERATED_REMINDERS_PATH = os.path.join(IMG_TOKEN_PATH, 'generated_reminders')
 CURVED_CHARACTER_NAMES_PATH = os.path.join(IMG_TOKEN_PATH, 'curved_character_names')
 CURVED_REMINDERS_PATH = os.path.join(IMG_TOKEN_PATH, 'curved_reminders')
-DEFAULT_CHARACTERS_JSON_PATH =  'characters.json'
+DEFAULT_CHARACTERS_JSON_PATH =  './characters.json'
 TOKEN_BG_PATH = 'img/token_bg'
 
 # Ensure all necessary directories exist
@@ -199,15 +200,24 @@ def overlay_with_alpha_composite(base_image_path, overlay_image_paths, output_pa
 if __name__ == "__main__":
     args = sys.argv[1:]
     if len(args) == 0:
+        print(f'INFO: No file path supplied, using default: \'{DEFAULT_CHARACTERS_JSON_PATH}\'...')
         characters_json_path = DEFAULT_CHARACTERS_JSON_PATH
-
+    else:
+        if os.path.exists(args[0]):
+            characters_json_path = args[0]
+        else:
+            print('An Error occurred while loading character file: Invalid file path supplied...')
+            quit()
 
     try:
         with open(characters_json_path, 'r') as file:
             data = json.load(file)
-    except FileNotFoundError:
-        print(f"Error: '{characters_json_path}' not found.")
-        exit()
+    except json.JSONDecodeError as e:
+        print(f'Json \'{characters_json_path}\' failed to load: {e}')
+        quit()
+    # except FileNotFoundError:
+    #     print(f"Error: '{characters_json_path}' not found.")
+    #     exit()
 
     characters_in_json = [character['id'] for character in data]
     character_names = get_filenames_no_extension(SCRAPED_IMAGES_PATH)
